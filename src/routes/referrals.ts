@@ -1,5 +1,5 @@
-import { Router, type Request, type Response } from "express";
-import { getAllUncontactedReferrals } from "../controllers/referrals";
+import { Router } from "express";
+import { getAllUncontactedReferrals } from "../controllers/referrals.js";
 
 const router = Router();
 

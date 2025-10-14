@@ -1,8 +1,8 @@
-import type { Event, Referral } from "../types/referral";
-import { AppError } from "./AppError";
-import { fetchData } from "./fetchData";
-import filterUniqueEvent from "./filterUniqueEvent";
-import timestampToDate from "./timestampToDate";
+import type { Event, Referral } from "../types/referral.js";
+import { AppError } from "./AppError.js";
+import { fetchData } from "./fetchData.js";
+import filterUniqueEvent from "./filterUniqueEvent.js";
+import timestampToDate from "./timestampToDate.js";
 import pLimit from "p-limit";
 
 const limit = pLimit(10);

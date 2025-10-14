@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import type { Referral } from "../types/referral";
-import { fetchData } from "../libs/fetchData";
-import { AppError } from "../libs/AppError";
-import timestampToDate from "../libs/timestampToDate";
-import { fetchEvents } from "../libs/fetchEvents";
+import type { Referral } from "../types/referral.js";
+import { fetchData } from "../libs/fetchData.js";
+import { AppError } from "../libs/AppError.js";
+import timestampToDate from "../libs/timestampToDate.js";
+import { fetchEvents } from "../libs/fetchEvents.js";
 
 /**
  * GET /api/referrals/uncontacted/all

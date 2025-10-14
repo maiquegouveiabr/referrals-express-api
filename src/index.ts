@@ -1,7 +1,12 @@
-import type { Application, Request, Response, NextFunction } from "express";
-import express from "express";
-import { AppError } from "./libs/AppError";
-import referralsRouter from "./routes/referrals";
+import express, {
+  type Application,
+  type Request,
+  type Response,
+  type NextFunction,
+} from "express";
+
+import { AppError } from "./libs/AppError.js";
+import referralsRouter from "./routes/referrals.js";
 
 const app: Application = express();
 

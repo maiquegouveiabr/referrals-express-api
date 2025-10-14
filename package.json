@@ -2,7 +2,7 @@
   "name": "referrals-express-api",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc",
