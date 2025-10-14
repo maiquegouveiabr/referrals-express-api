@@ -6,7 +6,7 @@ import timestampToDate from "../libs/timestampToDate.js";
 import { fetchEvents } from "../libs/fetchEvents.js";
 
 /**
- * GET /referrals/uncontacted/all
+ * GET /api/referrals/uncontacted/all
  */
 
 export async function getAllUncontactedReferrals(req: Request, res: Response) {
