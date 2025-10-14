@@ -65,7 +65,7 @@ export const fetchEvents = async (
       return {
         ...ref,
         lastEvent: Math.max(...reportedEvents.map((event) => event.itemDate)),
-        events: filteredEvents,
+        events: reportedEvents,
         referralDate,
       };
     })
