@@ -1,76 +1,13 @@
 import type { Request, Response } from "express";
+import type { Referral } from "../types/referral.js";
 import { fetchData } from "../libs/fetchData.js";
 import { AppError } from "../libs/AppError.js";
-import type { Referral, Event } from "../types/referral.js";
 import timestampToDate from "../libs/timestampToDate.js";
-import filterUniqueEvent from "../libs/filterUniqueEvent.js";
-import pLimit from "p-limit";
+import { fetchEvents } from "../libs/fetchEvents.js";
 
 /**
  * GET /referrals/uncontacted/all
  */
-
-const limit = pLimit(10);
-
-const fetchEvents = async (referrals: Referral[], refreshToken: string) => {
-  const tasks = referrals.map((ref) =>
-    limit(async () => {
-      const url = `https://referralmanager.churchofjesuschrist.org/services/progress/timeline/${ref.personGuid}`;
-      const response = await fetchData(url, refreshToken);
-      if (!response.ok) {
-        throw new AppError(response.statusText, 502, { at: "fetchEvents" });
-      }
-      const events = (await response.json()) as Event[];
-      const referralDate =
-        events.find((event) => event.timelineItemType === "NEW_REFERRAL")
-          ?.itemDate || ref.createDate;
-
-      const { eventDays: inPersonSet, filtered: inPersonEvents } =
-        filterUniqueEvent(
-          events.filter(
-            (event) =>
-              event.contactTypeCode === "PERSON" &&
-              event.itemDate > referralDate
-          )
-        );
-      const { eventDays: notInPersonSet, filtered: notInPersonEvents } =
-        filterUniqueEvent(
-          events.filter(
-            (event) =>
-              event.contactTypeCode !== "PERSON" &&
-              event.itemDate > referralDate
-          )
-        );
-      const filteredEvents = inPersonEvents.slice(0, 2);
-      notInPersonEvents.forEach((event) => {
-        const date = timestampToDate(event.itemDate);
-        if (!inPersonSet.has(date)) {
-          filteredEvents.push(event);
-        }
-      });
-      const filteredKeys = new Set(
-        filteredEvents.map((event) => timestampToDate(event.itemDate))
-      );
-      const filteredEventsCopy = filteredEvents.slice();
-      filteredEventsCopy.forEach((event) => {
-        const date = timestampToDate(event.itemDate);
-        if (!filteredKeys.has(date)) {
-          filteredEvents.push(event);
-        }
-      });
-
-      return {
-        ...ref,
-        lastEvent: Math.max(...filteredEvents.map((event) => event.itemDate)),
-        events: filteredEvents,
-        referralDate,
-      };
-    })
-  );
-
-  const results = await Promise.all(tasks);
-  return results;
-};
 
 export async function getAllUncontactedReferrals(req: Request, res: Response) {
   const { refreshToken, missionId } = req.query;
