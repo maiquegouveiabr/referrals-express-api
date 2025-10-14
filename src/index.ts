@@ -5,7 +5,7 @@ import referralsRouter from "./routes/referrals.js";
 
 const app: Application = express();
 
-app.use("/referrals", referralsRouter);
+app.use("/api/referrals", referralsRouter);
 
 // Global error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
