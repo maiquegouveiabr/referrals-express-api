@@ -1,8 +1,8 @@
-import type { Event, Referral } from "../types/referral.js";
-import { AppError } from "./AppError.js";
-import { fetchData } from "./fetchData.js";
-import filterUniqueEvent from "./filterUniqueEvent.js";
-import timestampToDate from "./timestampToDate.js";
+import type { Event, Referral } from "../types/referral";
+import { AppError } from "./AppError";
+import { fetchData } from "./fetchData";
+import filterUniqueEvent from "./filterUniqueEvent";
+import timestampToDate from "./timestampToDate";
 import pLimit from "p-limit";
 
 const limit = pLimit(10);
@@ -10,7 +10,7 @@ const limit = pLimit(10);
 export const fetchEvents = async (
   referrals: Referral[],
   refreshToken: string
-) => {
+): Promise<Referral[]> => {
   const tasks = referrals.map((ref) =>
     limit(async () => {
       const url = `https://referralmanager.churchofjesuschrist.org/services/progress/timeline/${ref.personGuid}`;
@@ -64,7 +64,10 @@ export const fetchEvents = async (
       // return referral with added data (events)
       return {
         ...ref,
-        lastEvent: Math.max(...reportedEvents.map((event) => event.itemDate)),
+        lastEvent:
+          reportedEvents.length > 0
+            ? Math.max(...reportedEvents.map((event) => event.itemDate))
+            : null,
         events: reportedEvents,
         referralDate,
       };

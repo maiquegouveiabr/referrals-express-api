@@ -1,5 +1,5 @@
-import type { Event } from "../types/referral.js";
-import timestampToDate from "./timestampToDate.js";
+import type { Event } from "../types/referral";
+import timestampToDate from "./timestampToDate";
 
 export default (events: Event[]) => {
   const eventDays = new Set<string>();

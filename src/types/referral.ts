@@ -16,7 +16,7 @@ export interface Event {
 
 export interface Referral {
   referralDate: number;
-  lastEvent: number;
+  lastEvent: number | null;
   events: Event[];
   personGuid: string;
   firstName: string | null;
