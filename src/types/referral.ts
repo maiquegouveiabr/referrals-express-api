@@ -14,10 +14,26 @@ export interface Event {
   emailCampaignId: number;
 }
 
+export interface Lesson {
+  id?: number | string; // some endpoints mix numeric and string IDs
+  lesson?: string; // title or name of the lesson
+  principles?: Principle[];
+}
+
+export interface Principle {
+  description: string;
+  sortOrder: number;
+  lastTaught?: number; // likely a Unix timestamp (milliseconds)
+  eventId: string;
+  id: string;
+}
+
 export interface Referral {
+  phoneNumber: string;
   referralDate: number;
   lastEvent: number | null;
   events: Event[];
+  lessons: Lesson[];
   personGuid: string;
   firstName: string | null;
   lastName: string | null;
@@ -30,6 +46,7 @@ export interface Referral {
   personStatusId: number;
   referralStatusId: number;
   baptismDate: number | null;
+  lastSacramentDate: number | null;
 
   //   householdGuid: string;
   //   gender: string | null;
@@ -59,7 +76,6 @@ export interface Referral {
   //   lastLessonDate: number | null;
   //   statusDate: number | null;
   //   baptismGoalDate: number | null;
-  //   lastSacramentDate: number | null;
   //   lastTaughtByLocalDate: number | null;
   //   locId: number;
   //   stewardCmisFirstName: string | null;

@@ -31,6 +31,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-app.listen(3000, () =>
+const server = app.listen(3000, () =>
   console.log("🚀 Server running on http://localhost:3000")
 );
+
+server.setTimeout(0);
