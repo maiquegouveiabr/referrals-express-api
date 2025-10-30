@@ -60,7 +60,7 @@ export async function getAllUncontactedReferrals(req: Request, res: Response) {
           (event) => event.contactTypeCode === "PERSON"
         ).length,
         last_event: ref.lastEvent ? timestampToDate(ref.lastEvent) : "",
-        source: ref.personGuid.includes("-") ? "Media" : "Missionary",
+        source: ref.personGuid.includes("-") ? "Missionary" : "Media",
         link: `https://referralmanager.churchofjesuschrist.org/person/${ref.personGuid}`,
       };
     })
