@@ -19,6 +19,9 @@ export const fetchEvents = async (
         throw new AppError(response.statusText, 502, { at: "fetchEvents" });
       }
       const events = (await response.json()) as Event[];
+      const sacrament = events.filter(
+        (event) => event.timelineItemType === "SACRAMENT"
+      ).length;
       const referralDate =
         events.find((event) => event.timelineItemType === "NEW_REFERRAL")
           ?.itemDate || ref.createDate;
@@ -70,6 +73,7 @@ export const fetchEvents = async (
             : null,
         events: reportedEvents,
         referralDate,
+        sacrament,
       };
     })
   );

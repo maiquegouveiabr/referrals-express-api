@@ -4,8 +4,6 @@ import { fetchData } from "../libs/fetchData.js";
 import { AppError } from "../libs/AppError.js";
 import timestampToDate from "../libs/timestampToDate.js";
 import { fetchEvents } from "../libs/fetchEvents.js";
-import { filterByPersonStatusId } from "../libs/filterByPersonStatusId.js";
-import { filterByReferralStatusId } from "../libs/filterByReferralStatusId.js";
 import { fetchEventsAll } from "../libs/fetchEventsAll.js";
 import { fetchPrinciples } from "../libs/fetchPrinciples.js";
 import { fetchPhoneNumber } from "../libs/fetchPhoneNumber.js";
@@ -61,6 +59,7 @@ export async function getAllUncontactedReferrals(req: Request, res: Response) {
         ).length,
         last_event: ref.lastEvent ? timestampToDate(ref.lastEvent) : "",
         source: ref.personGuid.includes("-") ? "Missionary" : "Media",
+        sacrament: ref.sacrament,
         link: `https://referralmanager.churchofjesuschrist.org/person/${ref.personGuid}`,
       };
     })

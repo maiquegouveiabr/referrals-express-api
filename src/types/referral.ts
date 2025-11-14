@@ -47,6 +47,7 @@ export interface Referral {
   referralStatusId: number;
   baptismDate: number | null;
   lastSacramentDate: number | null;
+  sacrament: number;
 
   //   householdGuid: string;
   //   gender: string | null;
