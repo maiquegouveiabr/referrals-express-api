@@ -9,12 +9,13 @@ const limit = pLimit(10);
 
 export const fetchEvents = async (
   referrals: Referral[],
-  refreshToken: string
+  refreshToken: string,
+  churchId: string
 ): Promise<Referral[]> => {
   const tasks = referrals.map((ref) =>
     limit(async () => {
       const url = `https://referralmanager.churchofjesuschrist.org/services/progress/timeline/${ref.personGuid}`;
-      const response = await fetchData(url, refreshToken);
+      const response = await fetchData(url, refreshToken, churchId);
       if (!response.ok) {
         throw new AppError(response.statusText, 502, { at: "fetchEvents" });
       }
